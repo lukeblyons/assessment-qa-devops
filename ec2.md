@@ -1,3 +1,3 @@
 ## Paste your link below
 
-https://54.176.120.49/
+http://54.176.120.49/

@@ -1,8 +1,21 @@
 const path = require('path');
 const express = require('express')
 const app = express()
+
 const {bots, playerRecord} = require(path.join(__dirname, 'data'));
 const {shuffleArray} = require(path.join(__dirname, 'utils'));
+
+// include and initialize the rollbar library with your access token
+var Rollbar = require('rollbar')
+var rollbar = new Rollbar({
+  accessToken: 'c0dbddc6e6a04b5e893f08c2e345ac6b',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+})
+
+// record a generic message and send it to Rollbar
+rollbar.log('Hello world!')
+
 
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')));
@@ -68,20 +81,7 @@ app.get('/api/player', (req, res) => {
     }
 })
 
-app.listen(4000, () => {
-  console.log(`Listening on 4000`)
-})
 
-// include and initialize the rollbar library with your access token
-var Rollbar = require('rollbar')
-var rollbar = new Rollbar({
-  accessToken: 'c0dbddc6e6a04b5e893f08c2e345ac6b',
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-})
-
-// record a generic message and send it to Rollbar
-rollbar.log('Hello world!')
 
 app.post('/api/duel', (req, res) => {
     try {
@@ -119,4 +119,7 @@ process.on('uncaughtException', (err) => {
     rollbar.critical(err);
     process.exit(1);
 });
-  
+
+app.listen(4000, () => {
+    console.log(`Listening on 4000`)
+  })
