@@ -1,10 +1,11 @@
+const path = require('path');
 const express = require('express')
 const app = express()
-const {bots, playerRecord} = require('./data')
-const {shuffleArray} = require('./utils')
+const {bots, playerRecord} = require(path.join(__dirname, 'data'));
+const {shuffleArray} = require(path.join(__dirname, 'utils'));
 
 app.use(express.json())
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/robots', (req, res) => {
     try {
@@ -67,8 +68,8 @@ app.get('/api/player', (req, res) => {
     }
 })
 
-app.listen(4000, () => {
-  console.log(`Listening on 4000`)
+app.listen(3000, () => {
+  console.log(`Listening on 3000`)
 })
 
 // include and initialize the rollbar library with your access token
