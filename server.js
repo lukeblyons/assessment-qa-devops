@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express')
 const app = express()
+const cors = require('cors');
 
 const {bots, playerRecord} = require(path.join(__dirname, 'data'));
 const {shuffleArray} = require(path.join(__dirname, 'utils'));
@@ -16,7 +17,7 @@ var rollbar = new Rollbar({
 // record a generic message and send it to Rollbar
 rollbar.log('Hello world!')
 
-
+app.use(cors());
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')));
 
